@@ -4,6 +4,10 @@ local default_plugins = {
   { "nvim-lua/plenary.nvim" },
 
   {
+    "tpope/vim-fugitive"
+  },
+
+  {
     "mfussenegger/nvim-lint",
     init = function()
       local lint = require "lint"
@@ -138,65 +142,64 @@ local default_plugins = {
     config = function()
       require "plugins.configs.lspconfig"
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
-			local lspconfig = require("lspconfig")
+      local lspconfig = require("lspconfig")
       local util = require "lspconfig/util"
 
-			lspconfig.lua_ls.setup({ capabilities = capabilities })
-			lspconfig.tsserver.setup({ capabilities = capabilities })
-			lspconfig.ltex.setup({ capabilities = capabilities })
-			lspconfig.texlab.setup({ capabilities = capabilities })
-			lspconfig.marksman.setup({ capabilities = capabilities })
-			lspconfig.pyre.setup({ capabilities = capabilities })
-			lspconfig.pylsp.setup({ capabilities = capabilities })
-			lspconfig.rust_analyzer.setup({
-				capabilities = capabilities,
+      lspconfig.lua_ls.setup({ capabilities = capabilities })
+      lspconfig.tsserver.setup({ capabilities = capabilities })
+      lspconfig.ltex.setup({ capabilities = capabilities })
+      lspconfig.texlab.setup({ capabilities = capabilities })
+      lspconfig.marksman.setup({ capabilities = capabilities })
+      lspconfig.pyre.setup({ capabilities = capabilities })
+      lspconfig.pylsp.setup({ capabilities = capabilities })
+      lspconfig.rust_analyzer.setup({
+        capabilities = capabilities,
         on_attach = on_attach,
-				filetypes = { "rust" },
-				root_dir = util.root_pattern("Cargo.toml"),
-				settings = {
-					["rust-analyzer"] = {
-						cargo = {
-							allFeatures = true,
-						},
-					},
-				},
-			})
+        filetypes = { "rust" },
+        root_dir = util.root_pattern("Cargo.toml"),
+        settings = {
+          ["rust-analyzer"] = {
+            cargo = {
+              allFeatures = true,
+            },
+          },
+        },
+      })
 
-			lspconfig.csharp_ls.setup({ capabilities = capabilities })
-			lspconfig.clangd.setup({ capabilities = capabilities })
-			lspconfig.cssls.setup({ capabilities = capabilities })
-			lspconfig.html.setup({ capabilities = capabilities })
-			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-			vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
-			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
-
+      lspconfig.csharp_ls.setup({ capabilities = capabilities })
+      lspconfig.clangd.setup({ capabilities = capabilities })
+      lspconfig.cssls.setup({ capabilities = capabilities })
+      lspconfig.html.setup({ capabilities = capabilities })
+      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+      vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
+      vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
+      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
     end,
   },
 
   {
-    "williamboman/mason-lspconfig.nvim", 
+    "williamboman/mason-lspconfig.nvim",
     config = function()
-			require("mason-lspconfig").setup({
-				ensure_installed = {
-					"rust_analyzer",
+      require("mason-lspconfig").setup({
+        ensure_installed = {
+          "rust_analyzer",
           "ast-grep",
-					"lua_ls",
-					"tsserver",
-					"ltex",
-					"texlab",
-					"marksman",
-					"pyre",
-					"pylsp",
-					"csharp_ls",
-					"clangd",
-					"cssls",
-					"html",
-				},
-				automatic_installation = true,
-			})
-		end,
-	},
+          "lua_ls",
+          "tsserver",
+          "ltex",
+          "texlab",
+          "marksman",
+          "pyre",
+          "pylsp",
+          "csharp_ls",
+          "clangd",
+          "cssls",
+          "html",
+        },
+        automatic_installation = true,
+      })
+    end,
+  },
 
 
   -- load luasnips + cmp related in insert mode only
@@ -250,12 +253,12 @@ local default_plugins = {
   {
     "numToStr/Comment.nvim",
     keys = {
-      { "gcc", mode = "n", desc = "Comment toggle current line" },
-      { "gc", mode = { "n", "o" }, desc = "Comment toggle linewise" },
-      { "gc", mode = "x", desc = "Comment toggle linewise (visual)" },
-      { "gbc", mode = "n", desc = "Comment toggle current block" },
-      { "gb", mode = { "n", "o" }, desc = "Comment toggle blockwise" },
-      { "gb", mode = "x", desc = "Comment toggle blockwise (visual)" },
+      { "gcc", mode = "n",          desc = "Comment toggle current line" },
+      { "gc",  mode = { "n", "o" }, desc = "Comment toggle linewise" },
+      { "gc",  mode = "x",          desc = "Comment toggle linewise (visual)" },
+      { "gbc", mode = "n",          desc = "Comment toggle current block" },
+      { "gb",  mode = { "n", "o" }, desc = "Comment toggle blockwise" },
+      { "gb",  mode = "x",          desc = "Comment toggle blockwise (visual)" },
     },
     init = function()
       require("core.utils").load_mappings "comment"
@@ -324,10 +327,10 @@ local default_plugins = {
       local options = {
         sources = {
           -- Replace these with your preferred formatters
-          null_ls.builtins.formatting.prettier, -- JavaScript, TypeScript, etc.
-          null_ls.builtins.formatting.stylua, -- Lua
-          null_ls.builtins.formatting.black, -- Python
-          null_ls.builtins.formatting.rustfmt, --rust
+          null_ls.builtins.formatting.prettier,     -- JavaScript, TypeScript, etc.
+          null_ls.builtins.formatting.stylua,       -- Lua
+          null_ls.builtins.formatting.black,        -- Python
+          null_ls.builtins.formatting.rustfmt,      --rust
           null_ls.builtins.formatting.clang_format, -- c++
           -- Add more formatters as needed
         },
