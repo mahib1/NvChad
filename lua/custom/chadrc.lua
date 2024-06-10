@@ -1,7 +1,7 @@
 local M = {}
 
 M.ui = {
-  theme = "gatekeeper", -- Set your preferred theme
+  theme = "everblush", -- Set your preferred theme
 }
 
 M.mappings = {}
