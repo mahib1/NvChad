@@ -1,4 +1,4 @@
--- All plugins have lazy=true by default,to load a plugin on startup just lazy=false
+-- plugins have lazy=true by default,to load a plugin on startup just lazy=false
 -- List of all default plugins & their definitions
 local default_plugins = {
   { "nvim-lua/plenary.nvim" },
@@ -9,8 +9,9 @@ local default_plugins = {
 
   {
     "olrtg/nvim-emmet",
+    lazy=false,
     config = function()
-      vim.keymap.set({ "n", "v" }, '<leader>ne', require('nvim-emmet').wrap_with_abbreviation)
+      vim.keymap.set({ "n", "v" }, '<leader>ce', require('nvim-emmet').wrap_with_abbreviation)
     end,
   },
 
