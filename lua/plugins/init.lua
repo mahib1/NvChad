@@ -160,6 +160,7 @@ local default_plugins = {
       lspconfig.marksman.setup({ capabilities = capabilities })
       lspconfig.pyre.setup({ capabilities = capabilities })
       lspconfig.pylsp.setup({ capabilities = capabilities })
+      lspconfig.emmet_language_server.setup({})
       lspconfig.rust_analyzer.setup({
         capabilities = capabilities,
         on_attach = on_attach,
