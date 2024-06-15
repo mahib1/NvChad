@@ -9,9 +9,9 @@ local default_plugins = {
 
   {
     "olrtg/nvim-emmet",
-    lazy=false,
+    lazy = false,
     config = function()
-      vim.keymap.set({ "n", "v" }, '<leader>ce', require('nvim-emmet').wrap_with_abbreviation)
+      vim.keymap.set({ "n", "v" }, "<leader>ce", require("nvim-emmet").wrap_with_abbreviation)
     end,
   },
 
@@ -149,36 +149,46 @@ local default_plugins = {
     event = "User FilePost",
     config = function()
       require "plugins.configs.lspconfig"
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      local lspconfig = require("lspconfig")
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      local lspconfig = require "lspconfig"
       local util = require "lspconfig/util"
 
-      lspconfig.lua_ls.setup({ capabilities = capabilities })
-      lspconfig.tsserver.setup({ capabilities = capabilities })
-      lspconfig.ltex.setup({ capabilities = capabilities })
-      lspconfig.texlab.setup({ capabilities = capabilities })
-      lspconfig.marksman.setup({ capabilities = capabilities })
-      lspconfig.pyre.setup({ capabilities = capabilities })
-      lspconfig.pylsp.setup({ capabilities = capabilities })
-      lspconfig.emmet_language_server.setup({})
-      lspconfig.rust_analyzer.setup({
-        capabilities = capabilities,
-        on_attach = on_attach,
-        filetypes = { "rust" },
-        root_dir = util.root_pattern("Cargo.toml"),
+      lspconfig.lua_ls.setup { capabilities = capabilities }
+      lspconfig.tsserver.setup { capabilities = capabilities }
+      lspconfig.ltex.setup { capabilities = capabilities }
+      lspconfig.texlab.setup { capabilities = capabilities }
+      lspconfig.marksman.setup { capabilities = capabilities }
+      lspconfig.pyre.setup { capabilities = capabilities }
+      lspconfig.pylsp.setup { capabilities = capabilities }
+      lspconfig.emmet_language_server.setup {}
+      lspconfig.rust_analyzer.setup {
+        on_attach = function(client, bufnr)
+          vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+        end,
         settings = {
           ["rust-analyzer"] = {
+            imports = {
+              granularity = {
+                group = "module",
+              },
+              prefix = "self",
+            },
             cargo = {
-              allFeatures = true,
+              buildScripts = {
+                enable = true,
+              },
+            },
+            procMacro = {
+              enable = true,
             },
           },
         },
-      })
+      }
 
-      lspconfig.csharp_ls.setup({ capabilities = capabilities })
-      lspconfig.clangd.setup({ capabilities = capabilities })
-      lspconfig.cssls.setup({ capabilities = capabilities })
-      lspconfig.html.setup({ capabilities = capabilities })
+      lspconfig.csharp_ls.setup { capabilities = capabilities }
+      lspconfig.clangd.setup { capabilities = capabilities }
+      lspconfig.cssls.setup { capabilities = capabilities }
+      lspconfig.html.setup { capabilities = capabilities }
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
       vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
@@ -189,7 +199,7 @@ local default_plugins = {
   {
     "williamboman/mason-lspconfig.nvim",
     config = function()
-      require("mason-lspconfig").setup({
+      require("mason-lspconfig").setup {
         ensure_installed = {
           "rust_analyzer",
           "ast-grep",
@@ -206,10 +216,9 @@ local default_plugins = {
           "html",
         },
         automatic_installation = true,
-      })
+      }
     end,
   },
-
 
   -- load luasnips + cmp related in insert mode only
   {

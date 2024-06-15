@@ -1,7 +1,7 @@
 local M = {}
 
 M.ui = {
-  theme = "nord", -- Set your preferred theme
+  theme = "bearded-arc", -- Set your preferred theme
 }
 
 M.mappings = {}
