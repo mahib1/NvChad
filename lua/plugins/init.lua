@@ -144,82 +144,85 @@ local default_plugins = {
     end,
   },
 
-  {
-    "neovim/nvim-lspconfig",
-    event = "User FilePost",
-    config = function()
-      require "plugins.configs.lspconfig"
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
-      local lspconfig = require "lspconfig"
-      local util = require "lspconfig/util"
-
-      lspconfig.lua_ls.setup { capabilities = capabilities }
-      lspconfig.tsserver.setup { capabilities = capabilities }
-      lspconfig.ltex.setup { capabilities = capabilities }
-      lspconfig.texlab.setup { capabilities = capabilities }
-      lspconfig.marksman.setup { capabilities = capabilities }
-      lspconfig.pyre.setup { capabilities = capabilities }
-      lspconfig.pylsp.setup { capabilities = capabilities }
-      lspconfig.emmet_language_server.setup {}
-      lspconfig.rust_analyzer.setup {
-        on_attach = function(client, bufnr)
-          vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-        end,
-        settings = {
-          ["rust-analyzer"] = {
-            imports = {
-              granularity = {
-                group = "module",
-              },
-              prefix = "self",
-            },
-            cargo = {
-              buildScripts = {
-                enable = true,
-              },
-            },
-            procMacro = {
-              enable = true,
-            },
-          },
-        },
-      }
-
-      lspconfig.csharp_ls.setup { capabilities = capabilities }
-      lspconfig.clangd.setup { capabilities = capabilities }
-      lspconfig.cssls.setup { capabilities = capabilities }
-      lspconfig.html.setup { capabilities = capabilities }
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-      vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-      vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
-      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
-    end,
-  },
-
-  {
-    "williamboman/mason-lspconfig.nvim",
-    config = function()
-      require("mason-lspconfig").setup {
-        ensure_installed = {
-          "rust_analyzer",
-          "ast-grep",
-          "lua_ls",
-          "tsserver",
-          "ltex",
-          "texlab",
-          "marksman",
-          "pyre",
-          "pylsp",
-          "csharp_ls",
-          "clangd",
-          "cssls",
-          "html",
-        },
-        automatic_installation = true,
-      }
-    end,
-  },
-
+  -- {
+  --   "neovim/nvim-lspconfig",
+  --   event = "User FilePost",
+  --   config = function()
+  --     require "plugins.configs.lspconfig"
+  --     local capabilities = require("cmp_nvim_lsp").default_capabilities()
+  --     local lspconfig = require "lspconfig"
+  --     local util = require "lspconfig/util"
+  --     
+  --     lspconfig.svelte.setup { capabilities = capabilities }
+  --     lspconfig.biome.setup{ capabilities = capabilities }
+  --     lspconfig.lua_ls.setup { capabilities = capabilities }
+  --     lspconfig.tsserver.setup { capabilities = capabilities }
+  --     lspconfig.ltex.setup { capabilities = capabilities }
+  --     lspconfig.texlab.setup { capabilities = capabilities }
+  --     lspconfig.marksman.setup { capabilities = capabilities }
+  --     lspconfig.pyre.setup { capabilities = capabilities }
+  --     lspconfig.pylsp.setup { capabilities = capabilities }
+  --     lspconfig.emmet_language_server.setup {}
+  --     lspconfig.rust_analyzer.setup {
+  --       on_attach = function(client, bufnr)
+  --         vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+  --       end,
+  --       settings = {
+  --         ["rust-analyzer"] = {
+  --           imports = {
+  --             granularity = {
+  --               group = "module",
+  --             },
+  --             prefix = "self",
+  --           },
+  --           cargo = {
+  --             buildScripts = {
+  --               enable = true,
+  --             },
+  --           },
+  --           procMacro = {
+  --             enable = true,
+  --           },
+  --         },
+  --       },
+  --     }
+  --
+  --     lspconfig.csharp_ls.setup { capabilities = capabilities }
+  --     lspconfig.clangd.setup { capabilities = capabilities }
+  --     lspconfig.cssls.setup { capabilities = capabilities }
+  --     lspconfig.html.setup { capabilities = capabilities }
+  --     vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+  --     vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
+  --     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
+  --     vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
+  --   end,
+  -- },
+  --
+  -- {
+  --   "williamboman/mason-lspconfig.nvim",
+  --   config = function()
+  --     require("mason-lspconfig").setup {
+  --       ensure_installed = {
+  --         "rust_analyzer",
+  --         "ast-grep",
+  --         "lua_ls",
+  --         "tsserver",
+  --         "ltex",
+  --         "texlab",
+  --         "marksman",
+  --         "pyre",
+  --         "pylsp",
+  --         "csharp_ls",
+  --         "clangd",
+  --         "cssls",
+  --         "svelte",
+  --         "html",
+  --       },
+  --       automatic_installation = true,
+  --     }
+  --   end,
+  -- },
+  --
   -- load luasnips + cmp related in insert mode only
   {
     "hrsh7th/nvim-cmp",

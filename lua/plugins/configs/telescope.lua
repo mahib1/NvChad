@@ -10,6 +10,11 @@ local options = {
       "--column",
       "--smart-case",
     },
+    pickers = {
+      find_files = {
+        theme = "dropdown",
+      },
+    },
     prompt_prefix = "   ",
     selection_caret = "  ",
     entry_prefix = "  ",
