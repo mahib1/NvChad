@@ -20,3 +20,21 @@ dofile(vim.g.base46_cache .. "defaults")
 vim.opt.rtp:prepend(lazypath)
 require "plugins"
 
+vim.api.nvim_create_user_command("Delc", function()
+  local count = vim.fn.searchcount({ pattern = "//", maxcount = 10000 }).total
+  if count == 0 then
+    print("No matches found.")
+    return
+  end
+  vim.cmd("normal! gg n ") -- Start at the top
+  for _ = 1, count do
+    vim.cmd("normal! d$ n")
+  end
+end, {})
+
+vim.cmd [[
+  highlight Normal guibg=none
+  highlight NonText guibg=none
+  highlight Normal ctermbg=none
+  highlight NonText ctermbg=none
+]]
