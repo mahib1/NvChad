@@ -1,7 +1,7 @@
 local M = {}
 
 M.ui = {
-  theme = "ashes", -- Set your preferred theme
+  theme = "tokyonight", -- Set your preferred theme
 }
 
 M.mappings = {}

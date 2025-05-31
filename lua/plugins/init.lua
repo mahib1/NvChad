@@ -2,6 +2,16 @@
 -- List of all default plugins & their definitions
 local default_plugins = {
   { "nvim-lua/plenary.nvim" },
+  {
+    "kylechui/nvim-surround",
+    version = "*", -- Use the latest stable version
+    event = "VeryLazy", -- Lazy load when needed
+    config = function()
+      require("nvim-surround").setup({})
+    end,
+  }, 
+
+  { "folke/tokyonight.nvim"},
 
   {
     "tpope/vim-fugitive",
