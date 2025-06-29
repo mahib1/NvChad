@@ -357,20 +357,6 @@ M.nvterm = {
       "Toggle vertical term",
     },
 
-    -- new
-    ["<leader>h"] = {
-      function()
-        require("nvterm.terminal").new "horizontal"
-      end,
-      "New horizontal term",
-    },
-
-    ["<leader>v"] = {
-      function()
-        require("nvterm.terminal").new "vertical"
-      end,
-      "New vertical term",
-    },
   },
 }
 
@@ -479,5 +465,57 @@ M.gitsigns = {
     },
   },
 }
+
+
+M.diagnostics = {
+  n = {
+    ["<leader>op"] = {
+      function()
+        local bufnr = vim.api.nvim_get_current_buf()
+        local line = vim.api.nvim_win_get_cursor(0)[1] - 1
+        local diagnostics = vim.diagnostic.get(bufnr, { lnum = line })
+        if vim.tbl_isempty(diagnostics) then
+          return
+        end
+
+        local float_buf = vim.api.nvim_create_buf(false, true)
+        local float_win = vim.api.nvim_open_win(float_buf, true, {
+          relative = "cursor",
+          row = 1,
+          col = 0,
+          width = 80,
+          height = #diagnostics,
+          style = "minimal",
+          border = "rounded",
+        })
+
+        local lines = {}
+        for i, d in ipairs(diagnostics) do
+          lines[i] = d.message
+        end
+
+        vim.api.nvim_buf_set_lines(float_buf, 0, -1, false, lines)
+        vim.api.nvim_buf_set_option(float_buf, "modifiable", false)
+        vim.api.nvim_buf_set_option(float_buf, "bufhidden", "wipe")
+        vim.api.nvim_buf_set_option(float_buf, "filetype", "markdown")
+        vim.api.nvim_buf_set_keymap(float_buf, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
+      end,
+      "Open and focus diagnostic float",
+    }
+  },
+}
+
+M.gitsigns = {
+  n = {
+    ["]c"] = { function() require("gitsigns").next_hunk() end, "Next hunk" },
+    ["[c"] = { function() require("gitsigns").prev_hunk() end, "Prev hunk" },
+    ["<leader>hs"] = { function() require("gitsigns").stage_hunk() end, "Stage hunk" },
+    ["<leader>hr"] = { function() require("gitsigns").reset_hunk() end, "Reset hunk" },
+    ["<leader>hu"] = { function() require("gitsigns").undo_stage_hunk() end, "Undo stage" },
+    ["<leader>hp"] = { function() require("gitsigns").preview_hunk() end, "Preview hunk" },
+    ["<leader>hb"] = { function() require("gitsigns").blame_line() end, "Blame line" },
+  },
+}
+
 
 return M

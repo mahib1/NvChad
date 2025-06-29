@@ -2,6 +2,18 @@
 -- List of all default plugins & their definitions
 local default_plugins = {
   { "nvim-lua/plenary.nvim" },
+
+  {
+    "NeogitOrg/neogit",
+    dependencies = "nvim-lua/plenary.nvim",
+    config = function()
+      require("neogit").setup()
+    end,
+    keys = {
+      { "<leader>gg", function() require("neogit").open() end, desc = "Neogit" },
+    },
+  },
+
   {
     "kylechui/nvim-surround",
     version = "*", -- Use the latest stable version
@@ -160,6 +172,7 @@ local default_plugins = {
 
   {
     "neovim/nvim-lspconfig",
+    lazy = false,
     event = "User FilePost",
     config = function()
       require "plugins.configs.lspconfig"
@@ -171,12 +184,13 @@ local default_plugins = {
       -- lspconfig.biome.setup{ capabilities = capabilities }
       lspconfig.lua_ls.setup { capabilities = capabilities }
       lspconfig.ts_ls.setup { capabilities = capabilities }
-      lspconfig.ltex.setup { capabilities = capabilities }
+      -- lspconfig.ltex.setup { capabilities = capabilities }
       lspconfig.texlab.setup { capabilities = capabilities }
+      lspconfig.csharp_ls.setup { capabilities = capabilities }
       --     lspconfig.marksman.setup { capabilities = capabilities }
       --     lspconfig.pyre.setup { capabilities = capabilities }
       --     lspconfig.pylsp.setup { capabilities = capabilities }
-      --     lspconfig.emmet_language_server.setup {}
+          lspconfig.emmet_language_server.setup {}
       --     lspconfig.rust_analyzer.setup {
       --       on_attach = function(client, bufnr)
       --         vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
@@ -206,7 +220,7 @@ local default_plugins = {
         cmd = { "clangd", "--query-driver=/usr/bin/c++", "--compile-commands-dir=build" }, -- Default clangd command
 
         -- Filetype-specific configuration
-        filetypes = { "cpp", "c", "objc", "objcpp", "cuda" },
+        filetypes = { "cpp", "c", "objc", "objcpp", "cuda", "js"},
         on_attach = function(client, bufnr)
           -- Apply C++17 flag only for C++ files
           if vim.bo.filetype == "cpp" then
@@ -239,7 +253,6 @@ local default_plugins = {
           -- "ast-grep",
           "lua_ls",
           "ts_ls",
-          "ltex",
           "texlab",
           -- "marksman",
           -- "pyre",
@@ -374,22 +387,22 @@ local default_plugins = {
   },
 
   {
-    "jose-elias-alvarez/null-ls.nvim",
-    init = function(_, opts)
-      local null_ls = require "null-ls"
+    "nvimtools/none-ls.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      local null_ls = require("null-ls") -- ✅ this is still 'null-ls'
+
       local options = {
         sources = {
-          -- Replace these with your preferred formatters
-          null_ls.builtins.formatting.prettier,     -- JavaScript, TypeScript, etc.
-          null_ls.builtins.formatting.stylua,       -- Lua
-          null_ls.builtins.formatting.black,        -- Python
-          null_ls.builtins.formatting.rustfmt,      --rust
-          null_ls.builtins.formatting.clang_format, -- c++
-          -- null_ls.builtins.formatting.biome,
-          -- Add more formatters as needed
+          null_ls.builtins.formatting.prettier,
+          null_ls.builtins.formatting.stylua,
+          null_ls.builtins.formatting.black,
+          null_ls.builtins.formatting.rustfmt,
         },
       }
+
       null_ls.setup(options)
+
       vim.api.nvim_set_keymap(
         "n",
         "<leader>nf",

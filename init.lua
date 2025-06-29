@@ -38,3 +38,16 @@ vim.cmd [[
   highlight Normal ctermbg=none
   highlight NonText ctermbg=none
 ]]
+
+
+vim.diagnostic.config({
+  virtual_text = false,  -- disable inline error messages
+  float = {
+    source = "always",   -- show source in float
+    border = "rounded",
+    focusable = true,
+    header = "",
+    prefix = "",
+    wrap = true,         -- <- enables wrapping inside the float
+  },
+})

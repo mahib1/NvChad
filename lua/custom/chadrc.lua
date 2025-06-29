@@ -1,10 +1,12 @@
+---@type ChadrcConfig
 local M = {}
 
 M.ui = {
-  theme = "tokyonight", -- Set your preferred theme
+  theme = "ashes", -- or your preferred theme
+  transparency = true,  -- this enables transparent background generally
+  tabufline = {
+    enabled = false,
+  }, hl_override = require("custom.highlights").override,
 }
 
-M.mappings = {}
-
 return M
-
