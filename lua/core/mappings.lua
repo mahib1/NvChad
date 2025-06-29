@@ -2,6 +2,27 @@
 
 local M = {}
 
+local M = {}
+
+-- Function to open lazygit in a floating terminal
+local function open_lazygit()
+  local Terminal = require("toggleterm.terminal").Terminal
+  local lazygit = Terminal:new({
+    cmd = "lazygit",
+    hidden = true,
+    direction = "float",
+    float_opts = {
+      border = "double",
+    },
+  })
+  lazygit:toggle()
+end
+
+M.general = {
+  n = {
+  },
+}
+
 M.general = {
   i = {
     -- go to  beginning and end
@@ -23,6 +44,7 @@ M.general = {
     ["<leader>sj"] = { "<C-w>j", "Window down" },
     ["<leader>sk"] = { "<C-w>k", "Window up" },
     ["<leader>-"] = { "<C-w>s", "Split Horizontal"},
+    ["<leader>gg"] = { open_lazygit, "Open Lazygit (float)" },
     ["<leader>\\"] = { "<C-w>v", "Split Vertically"},
 
   
