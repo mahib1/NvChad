@@ -23,6 +23,19 @@ local default_plugins = {
   },
 
   {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",  -- new harpoon
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      local harpoon = require("harpoon")
+      harpoon:setup()
+
+      require("telescope").load_extension("harpoon")
+    end
+  },
+
+
+  {
     "kylechui/nvim-surround",
     version = "*", -- Use the latest stable version
     event = "VeryLazy", -- Lazy load when needed
@@ -195,6 +208,7 @@ local default_plugins = {
       -- lspconfig.ltex.setup { capabilities = capabilities }
       lspconfig.texlab.setup { capabilities = capabilities }
       lspconfig.csharp_ls.setup { capabilities = capabilities }
+      lspconfig.cmake.setup { capabilities = capabilities }
       --     lspconfig.marksman.setup { capabilities = capabilities }
       --     lspconfig.pyre.setup { capabilities = capabilities }
       --     lspconfig.pylsp.setup { capabilities = capabilities }

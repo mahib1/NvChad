@@ -2,9 +2,8 @@
 
 local M = {}
 
-local M = {}
-
 -- Function to open lazygit in a floating terminal
+
 local function open_lazygit()
   local Terminal = require("toggleterm.terminal").Terminal
   local lazygit = Terminal:new({
@@ -17,11 +16,6 @@ local function open_lazygit()
   })
   lazygit:toggle()
 end
-
-M.general = {
-  n = {
-  },
-}
 
 M.general = {
   i = {
@@ -37,6 +31,82 @@ M.general = {
   },
 
   n = {
+    ["<leader>J"] = { ":m .+1<CR>==", "Move line down" },
+    ["<leader>K"] = { ":m .-2<CR>==", "Move line up" },
+    ["<leader>a"] = {
+      function()
+        require("harpoon"):list():append()
+      end,
+      "Harpoon add file",
+    },
+    ["<leader>h"] = {
+      function()
+        require("harpoon").ui:toggle_quick_menu(require("harpoon"):list())
+      end,
+      "Harpoon quick menu",
+    },
+    ["<leader>dr"] = {
+      function()
+        require("harpoon"):list():remove()
+      end,
+      "Remove and save Harpoon entry",
+    },
+
+    ["<leader>1"] = {
+      function()
+        require("harpoon"):list():select(1)
+      end,
+      "Harpoon file 1",
+    },
+    ["<leader>2"] = {
+      function()
+        require("harpoon"):list():select(2)
+      end,
+      "Harpoon file 2",
+    },
+    ["<leader>3"] = {
+      function()
+        require("harpoon"):list():select(3)
+      end,
+      "Harpoon file 3",
+    },
+    ["<leader>4"] = {
+      function()
+        require("harpoon"):list():select(4)
+      end,
+      "Harpoon file 4",
+    },
+    ["<leader>5"] = {
+      function()
+        require("harpoon"):list():select(5)
+      end,
+      "Harpoon file 5",
+    },
+    ["<leader>6"] = {
+      function()
+        require("harpoon"):list():select(6)
+      end,
+      "Harpoon file 6",
+    },
+    ["<leader>7"] = {
+      function()
+        require("harpoon"):list():select(7)
+      end,
+      "Harpoon file 7",
+    },
+    ["<leader>8"] = {
+      function()
+        require("harpoon"):list():select(8)
+      end,
+      "Harpoon file 8",
+    },
+    ["<leader>9"] = {
+      function()
+        require("harpoon"):list():select(9)
+      end,
+      "Harpoon file 9",
+    },
+
     ["<Esc>"] = { "<cmd> noh <CR>", "Clear highlights" },
     -- switch between windows
     ["<leader>sh"] = { "<C-w>h", "Window left" },
@@ -85,6 +155,8 @@ M.general = {
   },
 
   v = {
+    ["<leader>J"] = { ":m '>+1<CR>gv=gv", "Move selection down" },
+    ["<leader>K"] = { ":m '<-2<CR>gv=gv", "Move selection up" },
     ["<Up>"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', "Move up", opts = { expr = true } },
     ["<Down>"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', "Move down", opts = { expr = true } },
     ["<"] = { "<gv", "Indent line" },
