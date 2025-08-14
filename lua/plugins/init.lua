@@ -196,7 +196,7 @@ local default_plugins = {
     lazy = false,
     event = "User FilePost",
     config = function()
-      require "plugins.configs.lspconfig"
+      local lsp_user_configs = require "plugins.configs.lspconfig"
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
       local lspconfig = require "lspconfig"
       local util = require "lspconfig/util"
@@ -209,6 +209,14 @@ local default_plugins = {
       lspconfig.texlab.setup { capabilities = capabilities }
       lspconfig.csharp_ls.setup { capabilities = capabilities }
       lspconfig.cmake.setup { capabilities = capabilities }
+      lspconfig.verible.setup {
+        capabilities = capabilities,
+        on_attach = lsp_user_configs.on_attach,
+        filetypes = { "verilog", "systemverilog" },
+        root_dir = function(fname)
+          return util.root_pattern(".git")(fname) or util.path.dirname(fname)
+        end,
+      }
       --     lspconfig.marksman.setup { capabilities = capabilities }
       --     lspconfig.pyre.setup { capabilities = capabilities }
       --     lspconfig.pylsp.setup { capabilities = capabilities }
@@ -276,6 +284,7 @@ local default_plugins = {
           "lua_ls",
           "ts_ls",
           "texlab",
+          "verible",
           -- "marksman",
           -- "pyre",
           -- "pylsp",
